@@ -21,8 +21,14 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World'
+    from app.model import db
+    db.init_app(app)
+
+    from flask_restful import Api
+    api = Api(app)
+
+    from app.resource import TicketListResource, TicketResource
+    api.add_resource(TicketListResource, '/api/tickets')
+    api.add_resource(TicketResource, '/api/tickets/<int:id>')
 
     return app
