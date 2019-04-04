@@ -37,7 +37,7 @@ class TicketListResource(Resource):
         db.session.commit()
 
         result = ticket_schema.dump(ticket).data
-        return {'status': 'success', 'data': result}, 201
+        return {'data': result}, 201
 
     def put(self):
         json_data = request.get_json(force=True)

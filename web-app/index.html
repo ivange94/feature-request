@@ -41,57 +41,57 @@
     </table>
     <button class="btn btn-primary" data-toggle="modal" data-target="#addFeatureRequestModal">Add</button>
     <div class="modal fade" id="addFeatureRequestModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Add Feature Request</h4>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Feature Request</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" class="create-ticket" id="formCreateTicket">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" class="form-control" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea name="description" id="description" rows="10" class="form-control" name="description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="client">Client</label>
+                        <select class="form-control" id="client" name="client" required>
+                            <option value=""></option>
+                            <option value="Client A">Client A</option>
+                            <option value="Client B">Client B</option>
+                            <option value="Client C">Client C</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product_area">Product Area</label>
+                        <select name="product_area" id="product_area" class="form-control" required>
+                            <option value=""></option>
+                            <option value="Policies">Policies</option>
+                            <option value="Billing">Billing</option>
+                            <option value="Claims">Claims</option>
+                            <option value="Reports">Reports</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="priority">Priority</label>
+                        <input type="number" id="priority" class="form-control" name="priority" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="target_date">Target Date</label>
+                        <input type="date" id="target_date" class="form-control" name="target_date" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnAddNewFeatureRequest">Save changes</button>
+            </div>
+            </div>
         </div>
-        <div class="modal-body">
-            <form method="post" class="create-ticket">
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" id="title" class="form-control" name="title" required>
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea name="description" id="description" rows="10" class="form-control" name="description" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="client">Client</label>
-                    <select class="form-control" id="client" name="client" required>
-                        <option value=""></option>
-                        <option value="Client A">Client A</option>
-                        <option value="Client B">Client B</option>
-                        <option value="Client C">Client C</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="product_area">Product Area</label>
-                    <select name="product_area" id="product_area" class="form-control" required>
-                        <option value=""></option>
-                        <option value="Policies">Policies</option>
-                        <option value="Billing">Billing</option>
-                        <option value="Claims">Claims</option>
-                        <option value="Reports">Reports</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="priority">Priority</label>
-                    <input type="number" id="priority" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="priority">Target Date</label>
-                    <input type="date" id="target_date" class="form-control" required>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-        </div>
-    </div>
     </div>
 </div>
 
