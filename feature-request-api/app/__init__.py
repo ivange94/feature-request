@@ -27,12 +27,8 @@ def create_app(test_config=None):
     from flask_restful import Api
     api = Api(app)
 
-    from flask_migrate import Migrate
-    migrate = Migrate(app, db)
-
-    with app.app_context():
-        db.drop_all()
-        db.create_all()
+    from app.model import migrate
+    migrate.init_app(app=app, db=db)
 
     from app.resource import TicketListResource, TicketResource
     api.add_resource(TicketListResource, '/api/tickets')

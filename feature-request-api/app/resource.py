@@ -2,11 +2,12 @@ from flask import request
 from flask_restful import Resource
 from app.model import Ticket, TicketSchema, db
 
-ticket_schema = TicketSchema(many=True)
+ticket_schema = TicketSchema()
 
 
 class TicketListResource(Resource):
     def get(self):
+        ticket_schema = TicketSchema(many=True)
         tickets = ticket_schema.dump(Ticket.query.all()).data
         return {'status': 'success', 'data': tickets}, 200
 
@@ -55,10 +56,10 @@ class TicketListResource(Resource):
         ticket.description = data['description']
         ticket.client = data['client']
         ticket.product_area = data['product_area']
-        ticket.priority = data['data.priority']
+        ticket.priority = data['priority']
         ticket.target_date = data['target_date']
 
-        db.session.commt()
+        db.session.commit()
 
         result = ticket_schema.dump(ticket).data
 
