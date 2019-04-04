@@ -7,8 +7,8 @@ ticket_schema = TicketSchema()
 
 class TicketListResource(Resource):
     def get(self):
-        ticket_schema = TicketSchema(many=True)
-        tickets = ticket_schema.dump(Ticket.query.all()).data
+        ticket_list_schema = TicketSchema(many=True)
+        tickets = ticket_list_schema.dump(Ticket.query.all()).data
         return {'status': 'success', 'data': tickets}, 200
 
     def post(self):
@@ -68,5 +68,9 @@ class TicketListResource(Resource):
 
 class TicketResource(Resource):
     def get(self, id):
+        ticket = Ticket.query.get(id)
+        if not ticket:
+            return {'message': 'Ticket does not exist'}, 400
 
-        return Ticket.query.get(id), 404
+        result = ticket_schema.dump(ticket).data
+        return {'status': 'success', 'data': result}, 200
