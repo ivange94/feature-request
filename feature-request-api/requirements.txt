@@ -4,3 +4,4 @@ flask-restful
 flask-migrate
 marshmallow
 flask_marshmallow
+flask_cors
