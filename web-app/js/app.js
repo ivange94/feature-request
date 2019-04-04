@@ -13,6 +13,7 @@ $(document).ready(function() {
         'columns': [
             {"data": "id"},
             {"data": "title"},
+            {"data": "description"},
             {"data": "client"},
             {"data": "product_area"},
             {"data": "priority"},
