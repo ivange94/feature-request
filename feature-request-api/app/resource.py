@@ -62,8 +62,7 @@ class TicketListResource(Resource):
         db.session.commit()
 
         result = ticket_schema.dump(ticket).data
-
-        return {'status': 'success', 'data': result}, 204
+        return {'status': 'success', 'data': result}, 200
 
 
 class TicketResource(Resource):
