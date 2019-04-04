@@ -50,7 +50,7 @@ class TicketListResource(Resource):
 
         ticket = Ticket.query.get(data['id'])
         if not ticket:
-            return {'message': 'Ticket does not exist'}, 400
+            return {'message': 'Ticket does not exist'}, 404
 
         ticket.title = data['title']
         ticket.description = data['description']
@@ -69,7 +69,16 @@ class TicketResource(Resource):
     def get(self, id):
         ticket = Ticket.query.get(id)
         if not ticket:
-            return {'message': 'Ticket does not exist'}, 400
+            return {'message': 'Ticket does not exist'}, 404
 
         result = ticket_schema.dump(ticket).data
         return {'status': 'success', 'data': result}, 200
+
+    def delete(self, id):
+        ticket = Ticket.query.get(id)
+        if not ticket:
+            return {'message': 'Ticket does not exist'}, 404
+
+        db.session.delete(ticket)
+        db.session.commit()
+        return {'message': 'Deleted'}, 204
