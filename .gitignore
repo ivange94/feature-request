@@ -14,3 +14,10 @@
 *.egg-info/
 
 **/.idea/
+
+**/.DS_Store
+**/node_modules/
+**/bower_modules/
+
+# Don't track build output
+**/dist/
