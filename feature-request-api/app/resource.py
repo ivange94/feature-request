@@ -52,6 +52,13 @@ class TicketListResource(Resource):
         if not ticket:
             return {'message': 'Ticket does not exist'}, 404
 
+        similar_ticket = Ticket.query.filter_by(title=data['title']).first()
+        if similar_ticket and similar_ticket is not ticket:
+            return {'message': 'A ticket with similar title already exists'}, 400
+
+        if ticket:
+            return {'message': 'Ticket already exists'}, 400
+
         ticket.title = data['title']
         ticket.description = data['description']
         ticket.client = data['client']
