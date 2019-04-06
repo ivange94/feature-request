@@ -6,7 +6,39 @@ Simple Feature Request App. This app let's employees create feature requests aft
 
 Docker and Docker Compose
 
-## Installing
+## Run Application locally
+
+### Run Backend Service
+
+Move into the feature-request-api folder and run
+
+`python3 -m venv venv`
+
+`. venv/bin/activate`
+
+`pip install -r requirements.txt`
+
+`export FLASK_APP=app`
+
+`flask run`
+
+### Run Frontend Service
+
+Move to web-app folder and execute
+
+`python -m SimpleHTTPServer`
+
+Access the web app at https://localhost:8000/
+
+**NOTE** Here `python` refers to the python2 binary while `python3` refers to the python3 binary.
+
+## Run Tests
+
+Move to the feature-request-api folder and run
+
+`pytest`
+
+## Deploy
 
 Make sure you have [Docker Compose](https://docs.docker.com/compose/) installed.
 
