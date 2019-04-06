@@ -7,3 +7,4 @@ flask_marshmallow
 flask_cors
 marshmallow-sqlalchemy
 psycopg2==2.7.5
+pytest
