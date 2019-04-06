@@ -54,7 +54,9 @@ $(document).ready(function() {
             url: 'http://127.0.0.1:5000/api/tickets',
             data: JSON.stringify(jsonBody),
             success: function(result) {
-                location.reload();
+                $('#addFeatureRequestModal').modal('hide');
+                table.ajax.reload(null, false);
+                $('#actionStatus').show();
             }
         })
     });
@@ -69,7 +71,9 @@ $(document).ready(function() {
             url: 'http://127.0.0.1:5000/api/tickets',
             data: JSON.stringify(body),
             success: function(result) {
-                location.reload();
+                $('#editFeatureRequestModal').modal('hide');
+                table.ajax.reload(null, false);
+                $('#actionStatus').show();
             }
         })
     });
