@@ -46,36 +46,63 @@ $(document).ready(function() {
         return indexed_array;
     }
 
+    function validate(formData) {
+        if (formData.title.trim() === '')
+            return false;
+        if (formData.description.trim() === '')
+            return false;
+        if (formData.client.trim() === '')
+            return false;
+        if (formData.product_area.trim() === '')
+            return false;
+        if (!formData.target_date)
+            return false;
+        if (!formData.priority)
+            return false;
+        return true;
+    }
+
     $('#btnAddNewFeatureRequest').click( function() {
         var jsonBody = getFormData($("#formCreateTicket"));
-        
-        $.ajax({
-            type: 'POST',
-            url: 'http://127.0.0.1:5000/api/tickets',
-            data: JSON.stringify(jsonBody),
-            success: function(result) {
-                $('#addFeatureRequestModal').modal('hide');
-                table.ajax.reload(null, false);
-                $('#actionStatus').show();
-            }
-        })
+        var isValid = validate(jsonBody);
+
+        if (isValid) {
+            $.ajax({
+                type: 'POST',
+                url: 'http://127.0.0.1:5000/api/tickets',
+                data: JSON.stringify(jsonBody),
+                success: function(result) {
+                    $('#addFeatureRequestModal').modal('hide');
+                    table.ajax.reload(null, false);
+                    $('#actionStatus').show();
+                }
+            })
+        } else {
+            alert('All fields are required');
+        }
     });
 
     $('#btnUpdateFeatureRequest').click( function() {
         var body = getFormData($("#formUpdateTicket"));
 
+        var isValid = validate(body);
+
         body.id = $('#ticketId').val();
-    
-        $.ajax({
-            type: 'PUT',
-            url: 'http://127.0.0.1:5000/api/tickets',
-            data: JSON.stringify(body),
-            success: function(result) {
-                $('#editFeatureRequestModal').modal('hide');
-                table.ajax.reload(null, false);
-                $('#actionStatus').show();
-            }
-        })
+        
+        if (isValid) {
+            $.ajax({
+                type: 'PUT',
+                url: 'http://127.0.0.1:5000/api/tickets',
+                data: JSON.stringify(body),
+                success: function(result) {
+                    $('#editFeatureRequestModal').modal('hide');
+                    table.ajax.reload(null, false);
+                    $('#actionStatus').show();
+                }
+            })
+        } else {
+            alert('All fields are required');
+        }
     });
 
     $('#myTable').on('click', 'span#btnEdit', function(){
