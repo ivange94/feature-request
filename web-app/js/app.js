@@ -15,7 +15,7 @@ $(document).ready(function() {
             {"data": "target_date"},
             {
                 mRender: function(data, type, row) {
-                    return '<a href="#"><span class="glyphicon glyphicon-pencil" data-id="' + row.id + '" id="btnEdit"></span></a> / <a href="#"><span class="glyphicon glyphicon-remove" data-id="' + row.id + '" id="btnDelete"></span></a>'
+                    return '<a href="#"><span class="glyphicon glyphicon-pencil" data-id="' + row.id + '" data-bind="click: setValues()" id="btnEdit"></span></a> / <a href="#"><span class="glyphicon glyphicon-remove" data-id="' + row.id + '" id="btnDelete"></span></a>'
                 }
             },
         ]
@@ -33,7 +33,6 @@ $(document).ready(function() {
                 }
             })
         }
-
     });
 
     function getFormData($form) {
@@ -55,10 +54,40 @@ $(document).ready(function() {
             url: 'http://127.0.0.1:5000/api/tickets',
             data: JSON.stringify(jsonBody),
             success: function(result) {
-                /** $('#addFeatureRequestModal').modal('hide');
-                table.ajax.reload(null, false);*/
                 location.reload();
             }
+        })
+    });
+
+    $('#btnUpdateFeatureRequest').click( function() {
+        var body = getFormData($("#formUpdateTicket"));
+
+        body.id = $('#ticketId').val();
+    
+        $.ajax({
+            type: 'PUT',
+            url: 'http://127.0.0.1:5000/api/tickets',
+            data: JSON.stringify(body),
+            success: function(result) {
+                location.reload();
+            }
+        })
+    });
+
+    $('#myTable').on('click', 'span#btnEdit', function(){
+        var ticketId = $(this).attr('data-id');
+
+        $.get('http://127.0.0.1:5000/api/tickets/' + ticketId, function(result) {
+            var ticket = result['data'];
+            $('#edit_title').val(ticket['title']);
+            $('#edit_description').val(ticket['description']);
+            $('#edit_client').val(ticket['client']);
+            $('#edit_product_area').val(ticket['product_area']);
+            $('#edit_priority').val(ticket['priority']);
+            $('#edit_target_date').val(ticket['target_date']);
+            $('#ticketId').val(ticket['id']);
+
+            $('#editFeatureRequestModal').modal('show');
         })
     });
 });
