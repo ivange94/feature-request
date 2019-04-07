@@ -183,3 +183,88 @@ def test_post_no_data_provided_error(client):
         tickets = Ticket.query.all()
         assert(len(tickets) == 1)
 
+
+def test_put_should_update_ticket(client):
+    with app.app_context():
+        ticket = Ticket.query.get(1)
+        assert(ticket.title == 'Test')
+
+    res = client.put('/api/tickets', json={
+        'id': 1,
+        'title': 'Now Test 2',
+        'description': 'Some ticket',
+        'client': 'Client B',
+        'priority': 1,
+        'product_area': 'Policies',
+        'target_date': '2019-08-09'
+    })
+
+    assert(res.status_code == 200)
+
+    with app.app_context():
+        ticket = Ticket.query.get(1)
+        assert(ticket.title == 'Now Test 2')
+
+
+def test_put_no_data_error(client):
+    """PUT expects a json body. Return 400 error if body is not present"""
+
+    res = client.put('/api/tickets')
+    assert(res.status_code == 400)
+
+
+def test_trying_to_update_a_ticket_that_does_not_exist_should_return_404(client):
+    # Let's confirm that ticket with ID 4 does not exist
+    with app.app_context():
+        ticket = Ticket.query.get(4)
+        assert(ticket is None)
+
+    # now let's try to update ticket with ID 4
+        # Now let's try to add a ticket with title 'Test
+        res = client.put('/api/tickets', json={
+            'id': '4',
+            'title': 'Some ticket that does not exist',
+            'description': 'No body',
+            'client': 'Client A',
+            'priority': 1,
+            'product_area': 'Policies',
+            'target_date': '2019-09-09'
+        })
+
+        assert(res.status_code == 404)
+
+        res_message = res.json['message']
+        assert(res_message == 'Ticket does not exist')
+
+
+def test_if_updating_title_make_sure_title_is_not_already_taken(client):
+    # Let's add one more ticket
+    client.post('/api/tickets', json={
+        'title': 'Some ticket',
+        'description': 'Some ticket',
+        'client': 'Client B',
+        'priority': 1,
+        'product_area': 'Policies',
+        'target_date': '2019-08-09'
+    })
+
+    # let's confirm we have 2 tickets in the system
+    with app.app_context():
+        tickets = Ticket.query.all()
+        assert(len(tickets) == 2)
+
+    # Now let's try to edit the title of 'Some ticket' to 'Test'
+    res = client.put('/api/tickets', json={
+        'id': 2,
+        'title': 'Test',
+        'description': 'Some ticket',
+        'client': 'Client B',
+        'priority': 1,
+        'product_area': 'Policies',
+        'target_date': '2019-08-09'
+    })
+
+    assert(res.status_code == 400)
+
+    res_message = res.json['message']
+    assert(res_message == 'A ticket with similar title already exists')
