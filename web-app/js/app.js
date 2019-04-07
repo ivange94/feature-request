@@ -22,6 +22,7 @@ $(document).ready(function() {
     });
 
     $('#myTable').on('click', 'span#btnDelete', function(){
+        $('#actionStatus').hide();
         var shouldDelete = confirm('Are you sure you want to delete this record?')
         if (shouldDelete) {
             var id = $(this).attr('data-id');
@@ -34,6 +35,11 @@ $(document).ready(function() {
             })
         }
     });
+
+    $('#btnAddFeatureRequestModal').click(function () {
+        $('#actionStatus').hide();
+        $('#formCreateTicket').trigger('reset');
+    })
 
     function getFormData($form) {
         var unindexed_array = $form.serializeArray();
@@ -75,6 +81,7 @@ $(document).ready(function() {
                     $('#addFeatureRequestModal').modal('hide');
                     table.ajax.reload(null, false);
                     $('#actionStatus').show();
+                    $('#formCreateTicket').trigger('reset');
                 }
             })
         } else {
@@ -83,6 +90,7 @@ $(document).ready(function() {
     });
 
     $('#btnUpdateFeatureRequest').click( function() {
+        $('#actionStatus').hide();
         var body = getFormData($("#formUpdateTicket"));
 
         var isValid = validate(body);
@@ -106,6 +114,7 @@ $(document).ready(function() {
     });
 
     $('#myTable').on('click', 'span#btnEdit', function(){
+        $('#actionStatus').hide();
         var ticketId = $(this).attr('data-id');
 
         $.get('http://127.0.0.1:5000/api/tickets/' + ticketId, function(result) {
