@@ -24,20 +24,35 @@ class TicketListResource(Resource):
         if ticket:
             return {'message': 'Ticket already exists'}, 400
 
-        ticket = Ticket(
-            title=data['title'],
-            description=data['description'],
-            client=data['client'],
-            target_date=data['target_date'],
-            product_area=data['product_area'],
-            priority=data['priority']
-        )
+        title = data['title']
+        description = data['description']
+        client = data['client']
+        target_date = data['target_date']
+        product_area = data['product_area']
+        priority = data['priority']
 
-        db.session.add(ticket)
-        db.session.commit()
+        if title and description and client and target_date and product_area and priority and priority > 0:
+            new_ticket = Ticket(
+                title=title,
+                description=description,
+                client=client,
+                target_date=target_date,
+                product_area=product_area,
+                priority=priority
+            )
 
-        result = ticket_schema.dump(ticket).data
-        return {'data': result}, 201
+            tickets = Ticket.query.filter_by(client=client).order_by(Ticket.priority).all()
+            tickets.insert(new_ticket.priority - 1, new_ticket)
+            for i, ticket in enumerate(tickets, 1):
+                ticket.priority = i
+
+            db.session.add(new_ticket)
+            db.session.commit()
+
+            result = ticket_schema.dump(new_ticket).data
+            return {'data': result}, 201
+        else:
+            return {'message', 'Some fields are missing or invalid. Not Priority cannot be less than 1'}, 400
 
     def put(self):
         json_data = request.get_json(force=True)

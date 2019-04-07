@@ -132,6 +132,34 @@ def test_create_ticket(client):
         assert(len(tickets) == 2)
 
 
+def test_create_ticket_should_reorder_ticket_priority_for_client(client):
+    # We currently have 1 ticket for Client A with priority 1
+    with app.app_context():
+        tickets = Ticket.query.all()
+        assert(len(tickets) == 1)
+        assert(tickets[0].priority == 1)
+
+    # Let's create a new ticket for client A with priority one.
+    res = client.post('/api/tickets', json={
+        'title': 'New Ticket',
+        'description': 'New Ticket',
+        'client': 'Client A',
+        'priority': 1,
+        'product_area': 'Policies',
+        'target_date': '2019-09-09'
+    })
+
+    assert(res.status_code == 201)
+
+    created = res.json['data']
+    assert(created['title'] == 'New Ticket')
+
+    # Existing ticket's priority should have shifted to 2
+    with app.app_context():
+        ticket = Ticket.query.get(1) # This was the first and only ticket so we know it's ID is 1
+        assert(ticket.priority == 2)
+
+
 def test_post_ticket_exists_error(client):
     """Should return 400 if trying to create a ticket that already exists"""
     # We'll try to add a ticket with title 'Test'. This should not work
