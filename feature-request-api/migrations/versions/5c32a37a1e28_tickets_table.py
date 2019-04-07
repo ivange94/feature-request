@@ -1,8 +1,8 @@
 """tickets table
 
-Revision ID: 24e98ca293ed
+Revision ID: 5c32a37a1e28
 Revises: 
-Create Date: 2019-04-04 13:05:41.483124
+Create Date: 2019-04-07 02:49:00.348432
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '24e98ca293ed'
+revision = '5c32a37a1e28'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,7 +26,8 @@ def upgrade():
     sa.Column('target_date', sa.Date(), nullable=False),
     sa.Column('product_area', sa.String(), nullable=False),
     sa.Column('priority', sa.Integer(), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('title')
     )
     # ### end Alembic commands ###
 
