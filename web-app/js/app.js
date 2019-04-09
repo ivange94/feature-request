@@ -1,10 +1,11 @@
 $(document).ready(function() {
+    var baseUrl = 'http://127.0.0.1:5000/';
     var tableData = []
 
     var table = $('#myTable').DataTable({
         'processing': true,
         'ajax': {
-            'url': 'http://127.0.0.1:5000/api/tickets',
+            'url': baseUrl + 'api/tickets',
         },
         'columns': [
             {"data": "title"},
@@ -27,7 +28,7 @@ $(document).ready(function() {
         if (shouldDelete) {
             var id = $(this).attr('data-id');
             $.ajax({
-                url: 'http://127.0.0.1:5000/api/tickets/' + id,
+                url: baseUrl + 'api/tickets/' + id,
                 type: 'DELETE',
                 success: function(result) {
                     table.ajax.reload(null, false);
@@ -75,7 +76,7 @@ $(document).ready(function() {
         if (isValid) {
             $.ajax({
                 type: 'POST',
-                url: 'http://127.0.0.1:5000/api/tickets',
+                url: baseUrl + 'api/tickets',
                 data: JSON.stringify(jsonBody),
                 success: function(result) {
                     $('#addFeatureRequestModal').modal('hide');
@@ -100,7 +101,7 @@ $(document).ready(function() {
         if (isValid) {
             $.ajax({
                 type: 'PUT',
-                url: 'http://127.0.0.1:5000/api/tickets',
+                url: baseUrl + 'api/tickets',
                 data: JSON.stringify(body),
                 success: function(result) {
                     $('#editFeatureRequestModal').modal('hide');
@@ -117,7 +118,7 @@ $(document).ready(function() {
         $('#actionStatus').hide();
         var ticketId = $(this).attr('data-id');
 
-        $.get('http://127.0.0.1:5000/api/tickets/' + ticketId, function(result) {
+        $.get(baseUrl + 'api/tickets/' + ticketId, function(result) {
             var ticket = result['data'];
             $('#edit_title').val(ticket['title']);
             $('#edit_description').val(ticket['description']);
