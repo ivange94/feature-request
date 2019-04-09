@@ -40,6 +40,8 @@ Move to the feature-request-api folder and run
 
 ## Deploy
 
+**NB** If not deploying locally, please change [baseUrl](https://github.com/ivange94/feature-request/blob/master/web-app/js/app.js#L2) to point to your backend server else the frontend will try query the wrong server when deployed.
+
 Make sure you have [Docker Compose](https://docs.docker.com/compose/) installed.
 
 * Clone the project `git clone https://github.com/ivange94/feature-request.git`
