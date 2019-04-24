@@ -85,7 +85,7 @@ Endpoints exposed
 
 ## Demo
 
-A demo of this app can be accessed here [Feature Request](http://35.231.208.239:8000/)
+A demo of this app can be accessed here [Feature Request](http://35.231.208.239:8080)
 
 ## License
 
