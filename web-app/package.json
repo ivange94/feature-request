@@ -1,0 +1,17 @@
+{
+	"name": "feature_request_app",
+	"version": "1.0.0",
+	"description": "BriteCore Feature Request frontend",
+	"author": "Ivange Larry",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"bootstrap": "3.3.7",
+		"datatables.net": "1.10.19",
+		"datatables.net-dt": "1.10.19",
+		"express": "^4.16.1",
+		"jquery": "3.3.1"
+	}
+}

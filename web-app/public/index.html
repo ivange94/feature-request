@@ -1,0 +1,162 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>>Feature Requests</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/datatables.net-dt/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Feature Request</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <p id="actionStatus" class="action-status" hidden>Changes Saved</p>
+        <table id="myTable" class="display table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Client</th>
+                    <th>Product Area</th>
+                    <th>Priority</th>
+                    <th>Target Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Client</th>
+                    <th>Product Area</th>
+                    <th>Priority</th>
+                    <th>Target Date</th>
+                    <th>Action</th>
+                </tr>
+            </tfoot>
+        </table>
+        <button id="btnAddFeatureRequestModal" class="btn btn-primary" data-toggle="modal" data-target="#addFeatureRequestModal">Add</button>
+        <div class="modal fade" id="addFeatureRequestModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add Feature Request</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" class="create-ticket" id="formCreateTicket">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" class="form-control" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea name="description" id="description" rows="10" class="form-control" name="description" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="client">Client</label>
+                            <select class="form-control" id="client" name="client" required>
+                                <option value=""></option>
+                                <option value="Client A">Client A</option>
+                                <option value="Client B">Client B</option>
+                                <option value="Client C">Client C</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="product_area">Product Area</label>
+                            <select name="product_area" id="product_area" class="form-control" required>
+                                <option value=""></option>
+                                <option value="Policies">Policies</option>
+                                <option value="Billing">Billing</option>
+                                <option value="Claims">Claims</option>
+                                <option value="Reports">Reports</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="priority">Priority</label>
+                            <input type="number" id="priority" class="form-control" name="priority" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="target_date">Target Date</label>
+                            <input type="date" id="target_date" class="form-control" name="target_date" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnAddNewFeatureRequest">Save changes</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editFeatureRequestModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <input type="hidden" id="ticketId"/>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Edit Feature Request</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" class="create-ticket" id="formUpdateTicket">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" id="edit_title" class="form-control" name="title" data-bind="value: title">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea name="description" id="edit_description" rows="10" class="form-control" name="description" type="text" data-bind="value: description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="client">Client</label>
+                            <select class="form-control" id="edit_client" name="client" data-bind="value: client">
+                                <option value=""></option>
+                                <option value="Client A">Client A</option>
+                                <option value="Client B">Client B</option>
+                                <option value="Client C">Client C</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="product_area">Product Area</label>
+                            <select name="product_area" id="edit_product_area" class="form-control" data-bind="value: product_area">
+                                <option value=""></option>
+                                <option value="Policies">Policies</option>
+                                <option value="Billing">Billing</option>
+                                <option value="Claims">Claims</option>
+                                <option value="Reports">Reports</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="priority">Priority</label>
+                            <input type="number" id="edit_priority" class="form-control" name="priority" data-bind="value: priority">
+                        </div>
+                        <div class="form-group">
+                            <label for="target_date">Target Date</label>
+                            <input type="date" id="edit_target_date" class="form-control" name="target_date" data-bind="value: target_date">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnUpdateFeatureRequest">Save changes</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="scripts/main.js"></script>
+  </body>
+</html>
